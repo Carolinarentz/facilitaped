@@ -89,3 +89,10 @@ resultado_formatado = round(resultado, 1)
 
 # Imprimindo o resultado
 print(f" {resultado_formatado} ml")
+
+git init
+git add .
+git commit -m "Primeiro deploy"
+git branch -M main
+git remote add origin https://github.com/seu-usuario/seu-repositorio.git
+git push -u origin main
