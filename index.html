@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Soro de Manutenção</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+        }
+        label {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Calculadora de Soro de Manutenção Isotônico</h1>
+    
+    <form method="POST">
+        <label for="peso">Peso (kg):</label>
+        <input type="number" id="peso" name="peso" step="0.1" required><br>
+
+        <label for="superficie_corporal">Superfície Corporal (m², opcional, se peso > 30kg):</label>
+        <input type="number" id="superficie_corporal" name="superficie_corporal" step="0.01"><br>
+
+        <button type="submit">Calcular</button>
+    </form>
+
+    {% if liquido is not none %}
+        <h3>Resultados:</h3>
+        <p>Soro de Manutenção: {{ liquido }} ml</p>
+        <p>NaCl 20%: {{ soro }} ml</p>
+        <p>KCl 10%: {{ kcl }} ml</p>
+        <p>Glucanalto de Sódio 10%: {{ glucanalto }} ml</p>
+    {% endif %}
+
+</body>
+</html>
