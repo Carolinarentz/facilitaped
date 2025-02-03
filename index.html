@@ -24,7 +24,7 @@
 
     <h1>Calculadora de Soro de Manutenção Isotônico</h1>
     
-    <form method="POST">
+    <form id="form">
         <label for="peso">Peso (kg):</label>
         <input type="number" id="peso" name="peso" step="0.1" required><br>
 
@@ -34,13 +34,43 @@
         <button type="submit">Calcular</button>
     </form>
 
-    {% if liquido is not none %}
+    <div id="resultados" style="display:none;">
         <h3>Resultados:</h3>
-        <p>Soro de Manutenção: {{ liquido }} ml</p>
-        <p>NaCl 20%: {{ soro }} ml</p>
-        <p>KCl 10%: {{ kcl }} ml</p>
-        <p>Glucanalto de Sódio 10%: {{ glucanalto }} ml</p>
-    {% endif %}
+        <p>Soro de Manutenção: <span id="liquido"></span> ml</p>
+        <p>NaCl 20%: <span id="soro"></span> ml</p>
+        <p>KCl 10%: <span id="kcl"></span> ml</p>
+        <p>Glucanalto de Sódio 10%: <span id="glucanalto"></span> ml</p>
+    </div>
+
+    <script>
+        document.getElementById("form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let peso = document.getElementById("peso").value;
+            let superficieCorporal = document.getElementById("superficie_corporal").value;
+
+            let formData = new FormData();
+            formData.append("peso", peso);
+            if (superficieCorporal) {
+                formData.append("superficie_corporal", superficieCorporal);
+            }
+
+            fetch('/calcular', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("liquido").innerText = data.liquido;
+                document.getElementById("soro").innerText = data.soro;
+                document.getElementById("kcl").innerText = data.kcl;
+                document.getElementById("glucanalto").innerText = data.glucanalto;
+
+                document.getElementById("resultados").style.display = "block";
+            })
+            .catch(error => console.error('Erro:', error));
+        });
+    </script>
 
 </body>
 </html>
